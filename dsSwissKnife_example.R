@@ -53,7 +53,7 @@ cov(CNSIM_COMPLETE[,1:5])
 myplots <- dssVIM('aggr', newobj = NULL, async = TRUE, datasources = opals, 'cnsim' )
 # the VIM package help provides more documentation about the functions aggr and kNN implemented here
 # we can plot the results of the aggr function for each node:
-par(mfrow = c(1,2))
+par(mfrow = c(1,1))
 lapply(myplots, plot) #
 # we can now decide to impute the missing data using the VIM function kNN:
 dssVIM('kNN', newobj = 'cnsim_imp', async = TRUE, datasources = opals, data = 'cnsim', imp_var = FALSE)
@@ -65,20 +65,28 @@ lapply(myplots, plot)
 #retry the covariance matrix with cnsim_imputed
 dssCov('cnsim_imp')
 
+# Once we have the covariance matrix, PCA is easy:
+dssSubset('cnsim_complete', 'cnsim_complete', col.filter = '1:5') # this time we need to keep only the numeric columns
+remote_pca <- dssPrincomp('cnsim_complete')
+summary(remote_pca$global)
+# and the local correspondent:
+local_pca <- princomp(covmat = cov(CNSIM_COMPLETE[,1:5]))
+summary(local_pca)
+plot(remote_pca$global)
+biplot(remote_pca$global)
 
+# kmeans clustering:
+remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 40, nstart =40)
 
+local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 40, nstart = 40)
+# compare the two:
+remote_clusters$global$centers
+local_clusters$centers
+# we can produce biplots grouped by the 3 clusters like so:
+biplot(remote_pca$global, choices = c(1,2), type = 'combine', draw.arrows = FALSE, levels = 'cnsim_complete_km_clust3', emphasize_level = 1 )
+biplot(remote_pca$global, choices = c(1,2), type = 'combine', draw.arrows = FALSE, levels = 'cnsim_complete_km_clust3', emphasize_level = 2 )
 
 
 
 datashield.logout(opals)
 
-CNSIM <- as.data.frame(sapply(CNSIM,function(x){
-  if(is.numeric(x)){
-    attributes(x) <- NULL
-  }
-  x
-},simplify = FALSE))
-
-str(CNSIM)
-
-save(CNSIM, file = 'CNSIM.rda')
