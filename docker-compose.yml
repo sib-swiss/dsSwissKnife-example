@@ -1,0 +1,73 @@
+version: '3'
+services:
+
+    mongo_1:
+        image: idragan/mongo1:imported
+        command: mongod --port 27017 --dbpath /data/db1
+        hostname: mongo_1
+        expose:
+            - 27017
+        ports:
+            - "27017:27017"
+             
+             
+
+    mongo_2:
+        image: idragan/mongo2:imported
+        command: mongod --port 27018 --dbpath /data/db1
+        hostname: mongo_2
+        expose:
+            - 27018
+        ports:
+            - "27018:27018"
+
+
+    rserver:
+        image: idragan/rserver:imported
+        hostname: rserver
+        environment:
+            - RSERVER_HOME=/srv_local
+            - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
+
+    opal_server1:
+        image: idragan/opalsrv:latest
+        hostname: opal_server1
+        expose:
+            - 8443
+            - 8080
+        ports:
+            - "8843:8443"
+            - "8880:8080"
+            # Ports convention: <port on host>:<port inside container>
+        links:
+            - rserver
+            - mongo_1
+        environment:
+            - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
+            - OPAL_ADMINISTRATOR_PASSWORD=password
+            - OPAL_HOME=/srv_local
+            - RSERVER_HOST=rserver  
+            - MONGO_HOST=mongo_1
+            - MONGO_PORT=27017
+                
+
+    opal_server2:
+        image: idragan/opalsrv:latest
+        hostname: opal_server2
+        expose:
+            - 8443
+            - 8080
+        ports:
+            - "9843:8443"
+            - "9880:8080"
+        links:
+            - rserver
+            - mongo_2
+        environment:
+            - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
+            - OPAL_ADMINISTRATOR_PASSWORD=password
+            - OPAL_HOME=/srv_local
+            - RSERVER_HOST=rserver  
+            - MONGO_HOST=mongo_2
+            - MONGO_PORT=27018
+
