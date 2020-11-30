@@ -1,4 +1,4 @@
-
+install.packages('devtools')
 devtools::install_github('sib-swiss/dsSwissKnifeClient')
 devtools::install_github('datashield/dsBaseClient')
 library(dsSwissKnifeClient) # functions with the dss prefix - the objects of these tests
@@ -53,7 +53,7 @@ cov(CNSIM_COMPLETE[,1:5])
 myplots <- dssVIM('aggr', newobj = NULL, async = TRUE, datasources = opals, 'cnsim' )
 # the VIM package help provides more documentation about the functions aggr and kNN implemented here
 # we can plot the results of the aggr function for each node:
-par(mfrow = c(1,1))
+par(mfrow = c(2,1))
 lapply(myplots, plot) #
 # we can now decide to impute the missing data using the VIM function kNN:
 dssVIM('kNN', newobj = 'cnsim_imp', async = TRUE, datasources = opals, data = 'cnsim', imp_var = FALSE)
@@ -72,13 +72,14 @@ summary(remote_pca$global)
 # and the local correspondent:
 local_pca <- princomp(covmat = cov(CNSIM_COMPLETE[,1:5]))
 summary(local_pca)
+par(mfrow = c(1,1))
 plot(remote_pca$global)
 biplot(remote_pca$global)
 
 # kmeans clustering:
-remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 40, nstart =40)
+remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 40, nstart =30)
 
-local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 40, nstart = 40)
+local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 40, nstart = 30)
 # compare the two:
 remote_clusters$global$centers
 local_clusters$centers
