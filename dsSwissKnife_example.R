@@ -1,4 +1,4 @@
-setwd('/media/sf_shareddisk/opal_docker/dsSwissKnife_example')
+
 devtools::install_github('sib-swiss/dsSwissKnifeClient')
 devtools::install_github('datashield/dsBaseClient')
 library(dsSwissKnifeClient) # functions with the dss prefix - the objects of these tests
@@ -30,6 +30,8 @@ dssColMeans('cnsim') # the function looks only at the numeric columns no need to
 colMeans(CNSIM[,1:5], na.rm = TRUE)
 # how about the covariance matrix:
 dssCov('cnsim') # again, no need to pick only the numerics, it does it for us
+# got some errors, let's examine them:
+datashield.errors()
 # It doesn't work with NAs, so let's get rid of them. We can use one of 2 ways:
 # 1) use complete cases and hope we have enough data left
 # 2) impute missing data using the VIM package
@@ -45,6 +47,24 @@ nrow(CNSIM_COMPLETE)
 dssCov('cnsim_complete')
 # and the local one:
 cov(CNSIM_COMPLETE[,1:5])
+#
+# 2) sometimes we might need to impute data, we can do this with the VIM package
+# first let's paint a picture of the missing data:
+myplots <- dssVIM('aggr', newobj = NULL, async = TRUE, datasources = opals, 'cnsim' )
+# the VIM package help provides more documentation about the functions aggr and kNN implemented here
+# we can plot the results of the aggr function for each node:
+par(mfrow = c(1,2))
+lapply(myplots, plot) #
+# we can now decide to impute the missing data using the VIM function kNN:
+dssVIM('kNN', newobj = 'cnsim_imp', async = TRUE, datasources = opals, data = 'cnsim', imp_var = FALSE)
+# this created new object called cns_imp on each remote server:
+datashield.symbols(opals)
+# this object has no NAs:
+myplots <- dssVIM('aggr', newobj = NULL, async = TRUE, datasources = opals, 'cnsim_imp' )
+lapply(myplots, plot) 
+#retry the covariance matrix with cnsim_imputed
+dssCov('cnsim_imp')
+
 
 
 
