@@ -2,7 +2,7 @@ Utilisation examples for the R package dsSwissKnife
 ============
 
 Instructions
-============
+------------
 You will need a fairly recent computer with at least 10 GB of RAM and the docker and docker-compose software for your platform.
 Alternatively you can ask a sysadmin to download and run the docker images on a server. In this case you will have to modify the logindata.txt file
 by replacing 'localhost' with the actual ip address of the server.
