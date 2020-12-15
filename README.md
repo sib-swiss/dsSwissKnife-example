@@ -16,8 +16,8 @@ docker-compose up -d
 </code>
   
 At the first run the docker images will be downloaded, this will take about 20 - 30 minutes depending on your internet speed.
-Once the containers are created and executed, please run R or RStudio in the newly created folder (or setwd() to this folder)
-Execute the lines in the script one by one and examine the results.
+Once the containers are created and executed, please run R or RStudio in the newly created folder (or setwd() to this folder).
+Execute the lines in the dsSwissKnife_example.R script one by one and examine the results.
 
 
 
