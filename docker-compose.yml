@@ -23,11 +23,11 @@ services:
 
 
     rserver:
-        image: idragan/rserver:imported
+        image: idragan/rserver:latest
         hostname: rserver
         environment:
             - RSERVER_HOME=/srv_local
-            - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
+            - JAVA_OPTS=-Xms512m -Xmx2G -XX:+UseG1GC
 
     opal_server1:
         image: idragan/opalsrv:latest
@@ -45,10 +45,10 @@ services:
         environment:
             - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
             - OPAL_ADMINISTRATOR_PASSWORD=password
-            - OPAL_HOME=/srv_local
             - RSERVER_HOST=rserver  
             - MONGO_HOST=mongo_1
             - MONGO_PORT=27017
+            - DRIVING_SITE="TRUE"
                 
 
     opal_server2:
@@ -63,10 +63,11 @@ services:
         links:
             - rserver
             - mongo_2
+        depends_on:
+            - opal_server1    
         environment:
             - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
             - OPAL_ADMINISTRATOR_PASSWORD=password
-            - OPAL_HOME=/srv_local
             - RSERVER_HOST=rserver  
             - MONGO_HOST=mongo_2
             - MONGO_PORT=27018

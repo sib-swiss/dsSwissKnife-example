@@ -4,6 +4,8 @@ devtools::install_github('datashield/dsBaseClient')
 library(dsSwissKnifeClient) # functions with the dss prefix - the objects of these tests
 library(dsBaseClient) #  functions with the ds. or datashield. prefixes come from this or related DataSHIELD packages
 
+setwd('/media/sf_shareddisk/datashield/dsSwissKnife-example/')
+
 #### The local CNSIM data frame (in this session) contains the concatenated data of the 2 remote ones
 #### and will be used to compare the results of various operations
 load('CNSIM.rda')
@@ -77,7 +79,7 @@ plot(remote_pca$global)
 biplot(remote_pca$global)
 
 # kmeans clustering:
-remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 40, nstart =30)
+remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 100, nstart =100)
 
 local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 40, nstart = 30)
 # compare the two:
