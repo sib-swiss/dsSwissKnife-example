@@ -16,6 +16,7 @@ docker-compose up -d
 </code>
   
 At the first run the docker images will be downloaded, this will take about 20 - 30 minutes depending on your internet speed.
+This will be followed by about 5 minutes of package updates, the system will only be available once this process is finished (the progress can be followed in the rserver container in /srv_local/logs/Rserve.log)
 Once the containers are created and executed, please run R or RStudio in the newly created folder (or setwd() to this folder).
 Execute the lines in the dsSwissKnife_example.R script one by one and examine the results.
 
