@@ -22,12 +22,19 @@ services:
             - "27018:27018"
 
 
-    rserver:
+    rserver1:
         image: idragan/rserver:latest
-        hostname: rserver
+        hostname: rserver1
         environment:
             - RSERVER_HOME=/srv_local
-            - JAVA_OPTS=-Xms512m -Xmx2G -XX:+UseG1GC
+            - JAVA_OPTS=-Xms64m -Xmx512m -XX:+UseG1GC
+
+    rserver2:
+        image: idragan/rserver:latest
+        hostname: rserver2
+        environment:
+            - RSERVER_HOME=/srv_local
+            - JAVA_OPTS=-Xms64m -Xmx512m -XX:+UseG1GC
 
     opal_server1:
         image: idragan/opalsrv:latest
@@ -40,15 +47,14 @@ services:
             - "8880:8080"
             # Ports convention: <port on host>:<port inside container>
         links:
-            - rserver
+            - rserver1
             - mongo_1
         environment:
             - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
             - OPAL_ADMINISTRATOR_PASSWORD=password
-            - RSERVER_HOST=rserver  
+            - RSERVER_HOST=rserver1  
             - MONGO_HOST=mongo_1
             - MONGO_PORT=27017
-            - DRIVING_SITE="TRUE"
                 
 
     opal_server2:
@@ -61,14 +67,12 @@ services:
             - "9843:8443"
             - "9880:8080"
         links:
-            - rserver
+            - rserver2
             - mongo_2
-        depends_on:
-            - opal_server1    
         environment:
             - JAVA_OPTS=-Xms32m -Xmx512m -XX:+UseG1GC
             - OPAL_ADMINISTRATOR_PASSWORD=password
-            - RSERVER_HOST=rserver  
+            - RSERVER_HOST=rserver2  
             - MONGO_HOST=mongo_2
             - MONGO_PORT=27018
 
