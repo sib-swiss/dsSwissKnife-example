@@ -9,7 +9,8 @@ by replacing 'localhost' with the actual ip address of the server.
 Please download this repository (click the green Code button, then Download zip) and unzip it.\
 Run docker-compose with the provided docker-compose.yml file.
 
-In Linux the command would be\ 
+In Linux the command would be:
+
 <code>
 docker-compose up -d
 </code>
