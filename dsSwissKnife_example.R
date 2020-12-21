@@ -1,10 +1,9 @@
-install.packages('devtools')
-devtools::install_github('sib-swiss/dsSwissKnifeClient')
-devtools::install_github('datashield/dsBaseClient')
+install.packages(c('dsBaseClient', 'dsSwissKnifeClient'), repos = c('https://cran.obiba.org', 'https://rhap-fdb01.vital-it.ch/repo' ,'https://cloud.r-project.org/'))
 library(dsSwissKnifeClient) # functions with the dss prefix - the objects of these tests
 library(dsBaseClient) #  functions with the ds. or datashield. prefixes come from this or related DataSHIELD packages
 
-setwd('/media/sf_shareddisk/datashield/dsSwissKnife-example/')
+# replace the path in the command below with the actual path on your computer
+# setwd('/media/sf_shareddisk/datashield/dsSwissKnife-example/')
 
 #### The local CNSIM data frame (in this session) contains the concatenated data of the 2 remote ones
 #### and will be used to compare the results of various operations
@@ -79,9 +78,9 @@ plot(remote_pca$global)
 biplot(remote_pca$global)
 
 # kmeans clustering:
-remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 100, nstart =100)
-
-local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 40, nstart = 30)
+remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 50, nstart =50)
+# dssKmeans uses the Forgy algorithm - I force the same for the local version:
+local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 50, nstart = 50, algorithm = 'Forgy')
 # compare the two:
 remote_clusters$global$centers
 local_clusters$centers
