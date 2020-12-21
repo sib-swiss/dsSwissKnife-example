@@ -19,7 +19,7 @@ This will be followed by about 5 - 10  minutes of package updates, the system wi
 Once the containers are created and executed, please run R or RStudio in the newly created folder (or setwd() to this folder).
 Execute the lines in the dsSwissKnife_example.R script one by one and examine the results.
 
-A list of useful docker commands:
+A few useful docker commands:
 * list all the running containers:             <code>docker ps</code>
 * stop all the running containers:             <code>docker stop $(docker ps -aq)</code>
 * open a shell in the container:               <code>docker exec -it dsswissknife-example_opal_server1_1 /bin/bash</code>
