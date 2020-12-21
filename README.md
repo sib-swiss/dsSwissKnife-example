@@ -10,7 +10,6 @@ Please download this repository (click the green Code button, then Download zip)
 Run docker-compose with the provided docker-compose.yml file.
 
 In Linux the command would be:
-
 <code>
 docker-compose up -d
 </code>
