@@ -1,8 +1,6 @@
-Utilisation examples for the R package dsSwissKnife
-============
+## Utilisation examples for the R package dsSwissKnife
 
-Instructions
-------------
+# Instructions
 You will need a fairly recent computer with at least 6 GB of RAM and the docker and docker-compose software for your platform.\
 If you are running docker on Mac or Windows please increase the memory available to the docker vm at 4 GB.\
 Alternatively you can ask a sysadmin to download and run the docker images on a server. In this case you will have to modify the logindata.txt file
@@ -24,25 +22,10 @@ Execute the lines in the dsSwissKnife_example.R script one by one and examine th
 
 A list of useful docker commands:
 
-* list all the running containers:
-<code>
-docker ps
-</code>
-
-* stop all the running containers:
-<code>
-docker stop $(docker ps -aq)
-</code>
-
-* open a shell in the container 
-<code>
-docker exec -it sswissknife-example_opal_server1_1 /bin/bashA
-</code>
-
-* examine resource consumption per container:
-<code>
-docker stats
-</code>
+list all the running containers:            | <code>docker ps</code>
+stop all the running containers:            | <code>docker stop $(docker ps -aq)</code>
+open a shell in the container:              | <code>docker exec -it sswissknife-example_opal_server1_1 /bin/bashA</code>
+examine resource consumption per container: | <code>docker stats</code>
 
 
 
