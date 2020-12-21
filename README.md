@@ -24,22 +24,22 @@ Execute the lines in the dsSwissKnife_example.R script one by one and examine th
 
 A list of useful docker commands:
 
-list all the running containers:
+*list all the running containers:
 <code>
 docker ps
 </code>
 
-stop all the running containers:
+*stop all the running containers:
 <code>
 docker stop $(docker ps -aq)
 </code>
 
-open a shell in the container 
+*open a shell in the container 
 <code>
 docker exec -it sswissknife-example_opal_server1_1 /bin/bashA
 </code>
 
-examine resource consumption per container:
+*examine resource consumption per container:
 <code>
 docker stats
 </code>
