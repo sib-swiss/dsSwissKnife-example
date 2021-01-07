@@ -1,6 +1,9 @@
 ## Utilisation examples for the R package dsSwissKnife
 
+Docker images and script with usage examples for the R packages dsSwissKnifeClient (https://github.com/sib-swiss/dsSwissKnifeClient) and dsSwissKnife (https://github.com/sib-swiss/dsSwissKnife)
+
 ### Instructions
+
 You will need a fairly recent computer with at least 6 GB of RAM and the docker and docker-compose software for your platform.\
 If you are running docker on Mac or Windows please increase the memory available to the docker vm at 4 GB.\
 Alternatively you can ask a sysadmin to download and run the docker images on a server. In this case you will have to modify the logindata.txt file
