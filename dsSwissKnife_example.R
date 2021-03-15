@@ -128,7 +128,7 @@ biplot(remote_pca$global)
 # 6) Federated Kmeans clustering
 # The federated kmeans algorithm performs kmeans clustering in parallel on multiple nodes, combining the cluster centers at each iteration.
 
-remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 50, nstart =60)
+remote_clusters <- dssKmeans('cnsim_complete', centers = 3, iter.max = 50, nstart = 60)
 
 # dssKmeans uses the Forgy algorithm - Here we force the same for the local version:
 local_clusters <- kmeans(CNSIM_COMPLETE[,1:5], centers = 3, iter.max = 50, nstart = 60, algorithm = 'Forgy')
@@ -138,7 +138,7 @@ remote_clusters$global$centers
 local_clusters$centers
 
 # The starting points at each repetition (nstart) are random; there is a slight chance that the centers will not match exactly. 
-# If this is the case, an increase of the nstart parameter to 70 or 80 should fix the mismatch
+# If this is the case, an increase of the nstart parameter to 100 or more should fix the mismatch
 
 # We can layer the kmeans cluster classification onto the PCA biplots:
 biplot(remote_pca$global, choices = c(1,2), type = 'combine', draw.arrows = FALSE, levels = 'cnsim_complete_km_clust3', emphasize_level = 1 )
